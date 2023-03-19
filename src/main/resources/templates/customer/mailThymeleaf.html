@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>SEND MAIL WITH THYMELEAF</title>
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+</head>
+<body>
+
+<p th:text="${'Xin chào, ' + name}"></p>
+
+<div class="container-fluid pt-5">
+    <div class="row px-xl-5">
+        <h1></h1>
+        <p>Đơn hàng [[${myOrder.orderCode}]] của bạn được đặt [[${myOrder.createDate}]] </p>
+        <p>Số điện thoại [[${myOrder.cus_phone}]] tại [[${myOrder.cus_address}]]</p>
+        <p>Người nhận [[${myOrder.cus_fullName}]] </p>
+    </div>
+
+    <div class="row px-xl-5">
+        <div class="col-lg-8 table-responsive mb-5">
+            <table class="table table-bordered text-center mb-0">
+                <thead class="bg-secondary text-dark">
+                <tr>
+                    <th>STT</th>
+                    <th>Products</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Total</th>
+                </tr>
+                </thead>
+                <tbody class="align-middle">
+                <tr th:each="item, iterStat : ${myShoppingCart}">
+                    <td class="align-middle" th:text="${iterStat.count}"></td>
+                    <td>
+                        <!--                    <img alt="" style="width: 50px;" th:src="@{'/getImage/' + ${item.product.image}}"/>-->
+                        [[${item.product.name}]]
+                    </td>
+                    <td class="align-middle">$[[${item.product.cost}]]</td>
+                    <td class="align-middle">[[${item.quantity}]]</td>
+                    <td class="align-middle">$[[${item.price}]]</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="row px-xl-5">
+        <div class="col-lg-8 table-responsive mb-5">
+            <table class="table table-bordered text-center mb-0">
+                <thead class="bg-secondary text-dark">
+                <tr>
+                    <th>Subtotal</th>
+                    <th>$[[${total}]]</th>
+                </tr>
+                <tr>
+                    <th>Shipping</th>
+                    <th>$500</th>
+                </tr>
+                <tr>
+                    <th>Total</th>
+                    <th th:text="${'$' + (total + 5000)}"></th>
+                </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+
+    <div class="row px-xl-5">
+        <p>Một vài lưu ý nhỏ cho bạn:
+            Hãy kiểm tra kỹ chất lượng sản phẩm bạn nhận được và giữ lại hóa đơn,
+            hộp sản phẩm và phiếu bảo hành (nếu có) để trả hàng hoặc bảo hành khi cần thiết.
+
+            Trong trường hợp sản phẩm có dấu hiệu hư hỏng/ bể vỡ hoặc không đúng với thông tin như mô tả,
+            bạn hãy liên hệ với Lazada bằng cách để lại tin nhắn tại trang Liên hệ trong vòng 24 giờ
+            sau khi nhận sản phẩm để được hỗ trợ nhé.
+        </p>
+
+        <p>DAO QUOC TRUONG ALO 500 anh em nhá</p>
+    </div>
+
+</div>
+
+
+</body>
+</html>

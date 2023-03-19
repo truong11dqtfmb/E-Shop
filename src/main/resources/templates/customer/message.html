@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="customer/fragmentCustomer :: header"></head>
+
+<body>
+
+<!-- Contact Start -->
+<div class="container pt-5">
+    <div class="row px-xl-5">
+        <div class="col-lg-5 mb-5">
+            <img class="img-fluid w-100" th:src="@{/customer/img/product-2.jpg}" alt="">
+        </div>
+        <div class="col-lg-7 mb-5">
+            <div th:if="${message}">
+                <p class="alert alert-info  alert-dismissible fade show">[[${message}]]</p>
+            </div>
+            <div class="text-center py-3">
+                <div class="small">You have account? <a th:href="@{/shop/login}">Login here</a></div>
+                <p class="help-block text-danger"></p>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Contact End -->
+
+
+<!-- JavaScript Libraries -->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+<script th:src="@{/customer/lib/easing/easing.min.js}"></script>
+<script th:src="@{/customer/lib/owlcarousel/owl.carousel.min.js}"></script>
+
+<!-- Template Javascript -->
+<script th:src="@{/customer/js/main.js}"></script>
+</body>
+
+</html>

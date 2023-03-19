@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="admin/fragmentAdmin :: header"></head>
+<body class="sb-nav-fixed">
+
+<nav th:replace="admin/fragmentAdmin :: top-bar"></nav>
+
+<div id="layoutSidenav">
+
+    <div th:replace="admin/fragmentAdmin :: nav"></div>
+
+    <div id="layoutSidenav_content">
+        <main>
+            <div class="container-fluid px-4">
+                <h1 class="mt-4">Dashboard</h1>
+                <h1>DAO QUOC TRUONG</h1>
+                <div class="row">
+                    <div class="col-xl-3 col-md-6">
+                        <div class="card bg-secondary text-white mb-4">
+                            <div class="card-body">Product Manage ([[${countProduct}]])</div>
+                            <div class="card-footer d-flex align-items-center justify-content-between">
+                                <a class="small text-white stretched-link" th:href="@{/admin/products}">View Details</a>
+                                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6">
+                        <div class="card bg-info text-white mb-4">
+                            <div class="card-body">Category Manage ([[${countCategory}]])</div>
+                            <div class="card-footer d-flex align-items-center justify-content-between">
+                                <a class="small text-white stretched-link" th:href="@{/admin/categories}">View Details</a>
+                                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6">
+                        <div class="card bg-success text-white mb-4">
+                            <div class="card-body">Account Manage ([[${countUser}]])</div>
+                            <div class="card-footer d-flex align-items-center justify-content-between">
+                                <a class="small text-white stretched-link" th:href="@{/admin/users}">View Details</a>
+                                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6">
+                        <div class="card bg-primary text-white mb-4">
+                            <div class="card-body">Order Manage ([[${countOrder}]])</div>
+                            <div class="card-footer d-flex align-items-center justify-content-between">
+                                <a class="small text-white stretched-link" th:href="@{/admin/orders}">View Details</a>
+                                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="py-4 bg-light mt-auto">
+            <div class="container-fluid px-4">
+                <div class="d-flex align-items-center justify-content-between small">
+                    <div class="text-muted">Copyright &copy; Your Website 2022</div>
+                    <div>
+                        <a href="#">Privacy Policy</a>
+                        &middot;
+                        <a href="#">Terms &amp; Conditions</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+</div>
+
+<div  th:replace="admin/fragmentAdmin :: footer"></div>
+</body>
+</html>

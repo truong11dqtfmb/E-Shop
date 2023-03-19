@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="customer/fragmentCustomer :: header"></head>
+<body class="sb-nav-fixed">
+
+<div th:replace="customer/fragmentCustomer :: top-bar"></div>
+
+<!-- Navbar Start -->
+<div class="container-fluid mb-5">
+    <div class="row border-top px-xl-5">
+        <div th:replace="customer/fragmentCustomer :: category"></div>
+        <div class="col-lg-9">
+            <nav th:replace="customer/fragmentCustomer :: nav-bar"></nav>
+
+        </div>
+    </div>
+</div>
+<!-- Navbar End -->
+
+
+<!-- Products Start -->
+<div class="container-fluid pt-5">
+    <div class="text-center mb-4">
+        <h2 class="section-title px-5"><span class="px-2">All Products</span></h2>
+    </div>
+    <div class="row px-xl-5 pb-3">
+        <div class="col-12 pb-1">
+            <div class="d-flex align-items-center justify-content-between mb-4 row">
+                <form th:action="@{/shop/products/search}" class="col-6">
+                    <div class="input-group">
+                        <input type="text" name="search" class="form-control" placeholder="Search by name">
+                        <div class="input-group-append">
+                            <button class="input-group-text bg-transparent text-primary" type="submit">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                <div class="col-6 ">
+                    <div class="dropdown ml-4">
+                        <select size="1" name="sortBy" onchange="document.location.href=this.value">
+                            <option selected value="">Sort by</option>
+                            <option value="http://www.javascriptsource.com/">Lastest</option>
+                            <option value="http://www.javascript.com">Price</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row px-xl-5 pb-3">
+        <div th:each="product : ${products}" class="col-lg-3 col-md-6 col-sm-12 pb-1">
+            <div class="card product-item border-0 mb-4">
+                <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+                    <!--                    <img class="img-fluid w-100" th:src="@{/customer/img/product-1.jpg}" alt="">-->
+                    <img class="w-100" height="350px" alt="" th:src="@{'/getImage/' + ${product.image}}"/>
+                </div>
+                <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+                    <h6 class="text-truncate mb-3">[[${product.name}]]</h6>
+                    <div class="d-flex justify-content-center">
+                        <h6>$[[${product.cost}]]</h6>
+                        <h6 class="text-muted ml-2">
+                            <del>$[[${product.price}]]</del>
+                        </h6>
+                    </div>
+                </div>
+                <div class="card-footer d-flex justify-content-between bg-light border">
+                    <a th:href="@{/shop/product/{id}(id=${product.id})}" class="btn btn-sm text-dark p-0"><i
+                            class="fas fa-eye text-primary mr-1"></i>View Detail</a>
+                    <a th:href="@{/shop/cart/addToCart/{id}(id=${product.id})}" class="btn btn-sm text-dark p-0"><i
+                            class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 pb-1">
+            <nav aria-label="Page navigation">
+                <ul class="pagination justify-content-center mb-3">
+                    <li th:if="${currentPage > 2}" class="page-item">
+                        <a class="page-link"
+                           th:href="@{'/shop/products/search/1?sortField=id&sortDir='+${sortDir}+ '&search='+${search}}">
+                            <span aria-hidden="true">&sub;</span>
+                        </a>
+                    </li>
+                    <li th:if="${currentPage > 1}" class="page-item">
+                        <a class="page-link"
+                           th:href="@{'/shop/products/search/'+${currentPage-1} + '?sortField=id&sortDir='+${sortDir}+ '&search='+${search}}">
+                            <span aria-hidden="true">&laquo;</span></a></li>
+                    <li th:each="i: ${#numbers.sequence(1,totalPages)}"
+                        th:classappend="${currentPage == i ? 'page-item active' : 'page-item'}">
+                        <a th:if="${i > currentPage - 3 && i < currentPage + 3 }" class="page-link"
+                           th:href="@{'/shop/products/search/'+${i} + '?sortField=id&sortDir='+${sortDir}+ '&search='+${search}}">[[${i}]]</a>
+                    </li>
+                    <li th:if="${(currentPage + 1) <= totalPages}" class="page-item">
+                        <a class="page-link"
+                           th:href="@{'/shop/products/search/'+${currentPage+1} + '?sortField=id&sortDir='+${sortDir}+ '&search='+${search}}">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                    <li th:if="${(currentPage + 2) <= totalPages}" class="page-item">
+                        <a class="page-link"
+                           th:href="@{'/shop/products/search/' + ${totalPages} + '?sortField=id&sortDir='+${sortDir}+ '&search='+${search}}">
+                            <span aria-hidden="true">&sup;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+<!-- Products End -->
+
+
+<div th:replace="customer/fragmentCustomer :: footer"></div>
+
+</body>
+</html>

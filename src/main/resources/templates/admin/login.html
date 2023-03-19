@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="admin/fragmentAdmin :: header"></head>
+<body class="sb-nav-fixed">
+
+<div id="layoutSidenav">
+    <div id="layoutSidenav_content">
+        <main>
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-5">
+                        <div class="card shadow-lg border-0 rounded-lg mt-5">
+                            <div class="card-header"><h1 class="text-center font-weight-light my-4 text-primary">
+                                Login</h1></div>
+                            <div class="card-body">
+                                <form th:action="@{/admin/processingLogin}" method="post"
+                                      style="max-width: 600px; margin: 0 auto;">
+                                    <div th:if="${param.error}">
+                                        <p class="alert alert-info  alert-dismissible fade show">Email or password invalid</p>
+                                    </div>
+                                    <div>
+                                        <p class="alert alert-danger  alert-dismissible fade show" th:if="${statusVerified}"
+                                           th:text="${statusVerified}">
+                                    </div>
+                                    <div th:if="${param.logout}">
+                                        <p class="alert alert-info  alert-dismissible fade show">Logout account successfully!</p>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Email address</label>
+                                        <input class="form-control" type="email" name="email"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Password</label>
+                                        <input class="form-control" type="password" name="password"/>
+                                    </div>
+                                    <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
+                                        <a class="small" th:href="@{/admin/forgotPassword}">Forgot Password?</a>
+                                        <button type="submit" class="btn btn-primary">Login</button>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="card-footer text-center py-3">
+                                <div class="small"><a th:href="@{/admin/register}">New account? Sign up!</a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer class="py-4 bg-light mt-auto">
+            <div class="container-fluid px-4">
+                <div class="d-flex align-items-center justify-content-between small">
+                    <div class="text-muted">Copyright &copy; Your Website 2022</div>
+                    <div>
+                        <a href="">Privacy Policy</a>
+                        &middot;
+                        <a href="">Terms &amp; Conditions</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+</div>
+
+<div th:replace="admin/fragmentAdmin :: footer"></div>
+</body>
+</html>

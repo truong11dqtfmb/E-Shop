@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="admin/fragmentAdmin :: header"></head>
+<body class="sb-nav-fixed">
+
+<nav th:replace="admin/fragmentAdmin :: top-bar"></nav>
+
+<div id="layoutSidenav">
+
+    <div th:replace="admin/fragmentAdmin :: nav"></div>
+
+    <div id="layoutSidenav_content">
+        <main class="container" style="width = 100%">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <table class="table table-hover">
+                        <thead class="thead-dark">
+                        <tr>
+                            <th scope="col"><a
+                                    th:href="@{'/admin/orders/page/' + ${currentPage} + '?sortField=id&sortDir=' + ${reSortDir}}">Index</a>
+                            </th>
+                            <th scope="col"><a
+                                    th:href="@{'/admin/orders/page/' + ${currentPage} + '?sortField=orderCode&sortDir=' + ${reSortDir}}">OrderCode</a>
+                            </th>
+                            <th scope="col">User</th>
+                            <th scope="col">Address</th>
+                            <th scope="col">Payment</th>
+                            <th scope="col">DETAIL</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="order : ${orders}">
+                            <td th:text="${order.id}"></td>
+                            <td th:text="${order.orderCode}"></td>
+                            <td th:text="${order.user.fullName}"></td>
+                            <td th:text="${order.cus_address}"></td>
+                            <td th:text="${order.payments == 1} ? 'Tiền mặt' : 'Paypal'"></td>
+                            <td>
+                                <a th:href="@{/admin/order/{id}(id=${order.id})}" class="btn btn-info">Detail</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="container">
+                        <ul class="pagination">
+                            <li th:if="${currentPage > 2}" class="page-item">
+                                <a class="page-link"
+                                   th:href="@{'/admin/orders/page/1?sortField=id&sortDir='+${sortDir}}"> <strong>
+                                    |< </strong></a>
+                            </li>
+                            <li th:if="${currentPage > 1}" class="page-item">
+                                <a class="page-link"
+                                   th:href="@{'/admin/orders/page/'+${currentPage-1} + '?sortField=id&sortDir='+${sortDir}}">
+                                    <strong> << </strong> </a>
+                            </li>
+                            <li th:each="i: ${#numbers.sequence(1,totalPages)}"
+                                th:classappend="${currentPage == i ? 'page-item active' : 'page-item'}">
+                                <!--                <a class="page-link" th:href="@{'/admin/orders/page/'+${i} + '?sortField=id&sortDir='+${sortDir}}">[[${i}]]</a>-->
+                                <a th:if="${i > currentPage - 3 && i < currentPage + 3 }" class="page-link"
+                                   th:href="@{'/admin/orders/page/'+${i} + '?sortField=id&sortDir='+${sortDir}}">[[${i}]]</a>
+                            </li>
+                            <li th:if="${(currentPage + 1) <= totalPages}" class="page-item">
+                                <a class="page-link"
+                                   th:href="@{'/admin/orders/page/'+${currentPage+1} + '?sortField=id&sortDir='+${sortDir}}">
+                                    <strong> >> </strong></a>
+                            </li>
+                            <li th:if="${(currentPage + 2) <= totalPages}" class="page-item">
+                                <a class="page-link"
+                                   th:href="@{'/admin/orders/page/' + ${totalPages} + '?sortField=id&sortDir='+${sortDir}}">
+                                    <strong> |> </strong> </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="py-4 bg-light mt-auto">
+            <div class="container-fluid px-4">
+                <div class="d-flex align-items-center justify-content-between small">
+                    <div class="text-muted">Copyright &copy; Your Website 2022</div>
+                    <div>
+                        <a href="#">Privacy Policy</a>
+                        &middot;
+                        <a href="#">Terms &amp; Conditions</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+</div>
+
+<div th:replace="admin/fragmentAdmin :: footer"></div>
+</body>
+</html>

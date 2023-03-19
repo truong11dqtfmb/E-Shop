@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="customer/fragmentCustomer :: header"></head>
+
+<body>
+
+<!-- Contact Start -->
+<div class="container pt-5">
+    <div class="row px-xl-5">
+        <div class="col-lg-5 mb-5">
+            <img class="img-fluid w-100" th:src="@{/customer/img/product-2.jpg}" alt="">
+        </div>
+        <div class="col-lg-7 mb-5">
+            <div class="text-center mb-4">
+                <h2 class="section-title px-5"><span class="px-2">LOGIN ACCOUNT</span></h2>
+            </div>
+            <div class="contact-form">
+                <div id="success"></div>
+                <form th:action="@{/shop/processingLogin}" method="post">
+                    <div th:if="${param.error}">
+                        <p class="alert alert-info  alert-dismissible fade show">Email or password invalid</p>
+                    </div>
+                    <div>
+                        <p class="alert alert-danger  alert-dismissible fade show" th:if="${statusVerified}"
+                           th:text="${statusVerified}">
+                    </div>
+                    <div th:if="${param.logout}">
+                        <p class="alert alert-info  alert-dismissible fade show">Logout account successfully!</p>
+                    </div>
+                    <div class="control-group">
+                        <input type="email" class="form-control" name="email" id="Email" placeholder="Email"/>
+                        <p class="help-block text-danger"></p>
+                    </div>
+                    <div class="control-group">
+                        <input type="password" class="form-control" name="password" id="Password"
+                               placeholder="Password"/>
+                        <p class="help-block text-danger"></p>
+                    </div>
+                    <div>
+                        <button class="btn btn-primary btn-block py-2 px-4" type="submit" id="sendMessageButton">Login
+                        </button>
+                        <p class="help-block text-danger"></p>
+                    </div>
+                </form>
+            </div>
+            <div class="text-center py-3">
+                <div class="small"><a th:href="@{/shop/forgotPassword}">Forgot Password?</a></div>
+                <p class="help-block text-danger"></p>
+                <div class="small"><a th:href="@{/shop/register}">New account? Sign up!</a></div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Contact End -->
+
+
+<!-- JavaScript Libraries -->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+<script th:src="@{/customer/lib/easing/easing.min.js}"></script>
+<script th:src="@{/customer/lib/owlcarousel/owl.carousel.min.js}"></script>
+
+<!-- Template Javascript -->
+<script th:src="@{/customer/js/main.js}"></script>
+</body>
+
+</html>

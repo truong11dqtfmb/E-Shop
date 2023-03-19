@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="admin/fragmentAdmin :: header"></head>
+<body class="sb-nav-fixed">
+
+<nav th:replace="admin/fragmentAdmin :: top-bar"></nav>
+
+<div id="layoutSidenav">
+
+    <div th:replace="admin/fragmentAdmin :: nav"></div>
+
+    <div id="layoutSidenav_content">
+        <main class="container" style="width = 100%">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <table class="table table-hover">
+                        <thead class="thead-dark">
+                        <tr>
+                            <th scope="col"><a
+                                    th:href="@{'/admin/users/page/' + ${currentPage} + '?sortField=id&sortDir=' + ${reSortDir}}">Index</a>
+                            </th>
+                            <th scope="col"><a
+                                    th:href="@{'/admin/users/page/' + ${currentPage} + '?sortField=name&sortDir=' + ${reSortDir}}">FullName</a>
+                            </th>
+                            <th scope="col"><a
+                                    th:href="@{'/admin/users/page/' + ${currentPage} + '?sortField=price&sortDir=' + ${reSortDir}}">Email</a>
+                            </th>
+                            <th scope="col"><a
+                                    th:href="@{'/admin/users/page/' + ${currentPage} + '?sortField=sale&sortDir=' + ${reSortDir}}">Role</a>
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="user : ${users}">
+                            <td th:text="${user.id}"></td>
+                            <td th:text="${user.fullName}"></td>
+                            <td th:text="${user.email}"></td>
+                            <td th:text="${user.role}"></td>
+
+<!--                            <td><a th:if="${user.role} == 'USER'"-->
+<!--                                   th:href="@{/admin/user/enabled/{id}(id=${user.id})}" class="btn btn-info">Disabled</a>-->
+<!--                            </td>-->
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="container">
+                        <ul class="pagination">
+                            <li th:if="${currentPage > 2}" class="page-item">
+                                <a class="page-link"
+                                   th:href="@{'/admin/users/page/1?sortField=id&sortDir='+${sortDir}}"> <strong>
+                                    |< </strong></a>
+                            </li>
+                            <li th:if="${currentPage > 1}" class="page-item">
+                                <a class="page-link"
+                                   th:href="@{'/admin/users/page/'+${currentPage-1} + '?sortField=id&sortDir='+${sortDir}}">
+                                    <strong> << </strong> </a>
+                            </li>
+                            <li th:each="i: ${#numbers.sequence(1,totalPages)}"
+                                th:classappend="${currentPage == i ? 'page-item active' : 'page-item'}">
+                                <!--                <a class="page-link" th:href="@{'/admin/users/page/'+${i} + '?sortField=id&sortDir='+${sortDir}}">[[${i}]]</a>-->
+                                <a th:if="${i > currentPage - 3 && i < currentPage + 3 }" class="page-link"
+                                   th:href="@{'/admin/users/page/'+${i} + '?sortField=id&sortDir='+${sortDir}}">[[${i}]]</a>
+                            </li>
+                            <li th:if="${(currentPage + 1) <= totalPages}" class="page-item">
+                                <a class="page-link"
+                                   th:href="@{'/admin/users/page/'+${currentPage+1} + '?sortField=id&sortDir='+${sortDir}}">
+                                    <strong> >> </strong></a>
+                            </li>
+                            <li th:if="${(currentPage + 2) <= totalPages}" class="page-item">
+                                <a class="page-link"
+                                   th:href="@{'/admin/users/page/' + ${totalPages} + '?sortField=id&sortDir='+${sortDir}}">
+                                    <strong> |> </strong> </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="py-4 bg-light mt-auto">
+            <div class="container-fluid px-4">
+                <div class="d-flex align-items-center justify-content-between small">
+                    <div class="text-muted">Copyright &copy; Your Website 2022</div>
+                    <div>
+                        <a href="#">Privacy Policy</a>
+                        &middot;
+                        <a href="#">Terms &amp; Conditions</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+</div>
+
+<div th:replace="admin/fragmentAdmin :: footer"></div>
+</body>
+</html>

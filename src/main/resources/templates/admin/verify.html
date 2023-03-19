@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="admin/fragmentAdmin :: header"></head>
+<body class="sb-nav-fixed">
+
+<div id="layoutSidenav">
+  <div id="layoutSidenav_content">
+    <main>
+      <div class="container">
+        <div class="row justify-content-center">
+          <div>
+            <div class="card shadow-lg border-0 rounded-lg mt-5">
+              <div class="card-header">
+                <h1 class="text-center font-weight-light my-4 text-primary">VERIFY EMAIL</h1>
+
+              </div>
+              <div class="card-body">
+                  <div>
+                    <p class="alert alert-info  alert-dismissible fade show" th:if="${statusVerified}"
+                       th:text="${statusVerified}">
+                  </div>
+                  <div>
+                    <p class="alert alert-success  alert-dismissible fade show" th:if="${success}"
+                       th:text="${success}">
+                  </div>
+                <h3 class="text-center text-primary">Please check your email for verify email to activated account </h3>
+              </div>
+              <div class="card-footer text-center py-3">
+                <a th:href="@{/admin/login}" class="btn btn-outline-success">Login</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <footer class="py-4 bg-light mt-auto">
+      <div class="container-fluid px-4">
+        <div class="d-flex align-items-center justify-content-between small">
+          <div class="text-muted">Copyright &copy; Your Website 2022</div>
+          <div>
+            <a href="">Privacy Policy</a>
+            &middot;
+            <a href="">Terms &amp; Conditions</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+</div>
+
+<div  th:replace="admin/fragmentAdmin :: footer"></div>
+</body>
+</html>

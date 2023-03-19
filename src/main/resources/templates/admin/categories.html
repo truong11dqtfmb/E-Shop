@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="admin/fragmentAdmin :: header"></head>
+<body class="sb-nav-fixed">
+
+<nav th:replace="admin/fragmentAdmin :: top-bar"></nav>
+
+<div id="layoutSidenav">
+
+    <div th:replace="admin/fragmentAdmin :: nav"></div>
+
+    <div id="layoutSidenav_content">
+        <main class="container">
+            <div class="container">
+                <div class="container m-5">
+                    <a th:href="@{/admin/category/addForm}" class="btn btn-success">Add Category</a>
+                </div>
+                <div class="row justify-content-center">
+                    <table class="table table-hover">
+                        <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Index</th>
+                            <th scope="col">Category Name</th>
+                            <th scope="col">Edit</th>
+                            <th>
+                                <a class="btn btn-danger" th:href="@{/admin/categories/deleteAll}"
+                                   onclick="return confirm('Are your sure Delete All Category?')">Delete All</a>
+                            </th>
+                            <th>
+                                <a class="btn btn-info" th:href="@{/admin/categories/enableAll}"
+                                   onclick="return confirm('Are your sure Enable All Category?')">Enable All</a>
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="category : ${categories}">
+                            <td th:text="${category.id}"></td>
+                            <td th:text="${category.name}"></td>
+                            <td><a th:if="${category.isActived == true}" th:href="@{/admin/category/editForm/{id}(id=${category.id})}" class="btn btn-warning">EDIT</a></td>
+                            <td><a th:if="${category.isActived == true}" th:href="@{/admin/category/delete/{id}(id=${category.id})}" class="btn btn-danger" onclick="return confirm('Are your sure Delete Category?')">DELETE</a></td>
+                            <td><a th:if="${category.isActived == false}" th:href="@{/admin/category/enabled/{id}(id=${category.id})}" class="btn btn-info" onclick="return confirm('Are your sure Enable Category?')">ENABLE</a></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+
+        <footer class="py-4 bg-light mt-auto">
+            <div class="container-fluid px-4">
+                <div class="d-flex align-items-center justify-content-between small">
+                    <div class="text-muted">Copyright &copy; Your Website 2022</div>
+                    <div>
+                        <a href="#">Privacy Policy</a>
+                        &middot;
+                        <a href="#">Terms &amp; Conditions</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+</div>
+
+<div  th:replace="admin/fragmentAdmin :: footer"></div>
+</body>
+</html>

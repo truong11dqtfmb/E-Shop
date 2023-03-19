@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="admin/fragmentAdmin :: header"></head>
+<body class="sb-nav-fixed">
+
+<nav th:replace="admin/fragmentAdmin :: top-bar"></nav>
+
+<div id="layoutSidenav">
+
+    <div th:replace="admin/fragmentAdmin :: nav"></div>
+
+    <div id="layoutSidenav_content">
+        <main class="container" style="width = 100%">
+            <div class="container">
+                <div class="container m-5">
+                    <a th:href="@{/admin/product/addForm}" class="btn btn-outline-success">Add Product</a>
+                    <a th:href="@{/admin/product/exportToExcel}" class="btn btn-outline-success">Export to Excel</a>
+                    <a th:href="@{/admin/product/saleAllProduct}" class="btn btn-outline-success">Sale All Product</a>
+                </div>
+                <div class="container mt-5">
+                    <form class="form-inline" th:action="@{/admin/product/importFile}" method="POST" enctype="multipart/form-data"
+                          th:object="${readFileDTO}">
+                            <input type="file" class="form-control" name="multipartFile" th:field="*{multipartFile}">
+                            <button type="submit" class="btn btn-outline-success">Import file Excel</button>
+                    </form>
+                </div>
+                <div class="container mt-5 mb-3">
+                    <form class="form-inline" th:action="@{/admin/products/search}" method="GET" >
+                        <input type="text" class="form-control" name="search" >
+                        <button type="submit" class="btn btn-outline-success">Search</button>
+                    </form>
+                </div>
+                <div class="row justify-content-center">
+                    <table class="table table-hover">
+                        <thead class="thead-dark">
+                        <tr>
+                            <th scope="col"><a
+                                    th:href="@{'/admin/products/page/' + ${currentPage} + '?sortField=id&sortDir=' + ${reSortDir}}">Index</a>
+                            </th>
+                            <th scope="col"><a
+                                    th:href="@{'/admin/products/page/' + ${currentPage} + '?sortField=name&sortDir=' + ${reSortDir}}">Name</a>
+                            </th>
+                            <th scope="col"><a
+                                    th:href="@{'/admin/products/page/' + ${currentPage} + '?sortField=price&sortDir=' + ${reSortDir}}">Price</a>
+                            </th>
+                            <th scope="col">Category Name</th>
+                            <th scope="col"><a
+                                    th:href="@{'/admin/products/page/' + ${currentPage} + '?sortField=sale&sortDir=' + ${reSortDir}}">Sale</a>
+                            </th>
+                            <th scope="col"><a
+                                    th:href="@{'/admin/products/page/' + ${currentPage} + '?sortField=cost&sortDir=' + ${reSortDir}}">Cost</a>
+                            </th>
+                            <th scope="col"><a
+                                    th:href="@{'/admin/products/page/' + ${currentPage} + '?sortField=image&sortDir=' + ${reSortDir}}">Image</a>
+                            </th>
+                            <th scope="col">Edit</th>
+                            <th>
+                                <a class="btn btn-danger" th:href="@{/admin/products/deleteAll}"
+                                   onclick="return confirm('Are your sure Delete All Product?')">Delete All</a>
+                            </th>
+                            <th>
+                                <a class="btn btn-info" th:href="@{/admin/products/enableAll}"
+                                   onclick="return confirm('Are your sure Enable All Product?')">Enable All</a>
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="product : ${products}">
+                            <td th:text="${product.id}"></td>
+                            <td th:text="${product.name}"></td>
+                            <td th:text="${product.price}"></td>
+                            <td th:text="${product.category.name}"></td>
+                            <td th:text="${product.sale}"></td>
+                            <td th:text="${product.cost}"></td>
+                            <!--                            <td><img src="" alt="" height="40px" width="40px" th:src="*{'data:image/jpeg;base64,' + {product.image}}"></td>-->
+                            <td><img alt="" th:src="@{'/getImage/' + ${product.image}}" height="40px" width="40px"/>
+                            </td>
+                            <td><a th:if="${product.isActived == true}"
+                                   th:href="@{/admin/product/editForm/{id}(id=${product.id})}" class="btn btn-warning">EDIT</a>
+                            </td>
+                            <td><a th:if="${product.isActived == true}"
+                                   th:href="@{/admin/product/delete/{id}(id=${product.id})}" class="btn btn-danger" onclick="return confirm('Are your sure Delete Product?')">DELETE</a>
+                            </td>
+                            <td><a th:if="${product.isActived == false}"
+                                   th:href="@{/admin/product/enabled/{id}(id=${product.id})}" class="btn btn-info" onclick="return confirm('Are your sure Enable Product?')">ENABLE</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="container">
+                        <ul class="pagination">
+                            <li th:if="${currentPage > 2}" class="page-item">
+                                <a class="page-link"
+                                   th:href="@{'/admin/products/page/1?sortField=id&sortDir='+${sortDir}}"> <strong>
+                                    |< </strong></a>
+                            </li>
+                            <li th:if="${currentPage > 1}" class="page-item">
+                                <a class="page-link"
+                                   th:href="@{'/admin/products/page/'+${currentPage-1} + '?sortField=id&sortDir='+${sortDir}}">
+                                    <strong> << </strong> </a>
+                            </li>
+                            <li th:each="i: ${#numbers.sequence(1,totalPages)}"
+                                th:classappend="${currentPage == i ? 'page-item active' : 'page-item'}">
+                                <!--                <a class="page-link" th:href="@{'/admin/products/page/'+${i} + '?sortField=id&sortDir='+${sortDir}}">[[${i}]]</a>-->
+                                <a th:if="${i > currentPage - 3 && i < currentPage + 3 }" class="page-link"
+                                   th:href="@{'/admin/products/page/'+${i} + '?sortField=id&sortDir='+${sortDir}}">[[${i}]]</a>
+                            </li>
+                            <li th:if="${(currentPage + 1) <= totalPages}" class="page-item">
+                                <a class="page-link"
+                                   th:href="@{'/admin/products/page/'+${currentPage+1} + '?sortField=id&sortDir='+${sortDir}}">
+                                    <strong> >> </strong></a>
+                            </li>
+                            <li th:if="${(currentPage + 2) <= totalPages}" class="page-item">
+                                <a class="page-link"
+                                   th:href="@{'/admin/products/page/' + ${totalPages} + '?sortField=id&sortDir='+${sortDir}}">
+                                    <strong> |> </strong> </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="py-4 bg-light mt-auto">
+            <div class="container-fluid px-4">
+                <div class="d-flex align-items-center justify-content-between small">
+                    <div class="text-muted">Copyright &copy; Your Website 2022</div>
+                    <div>
+                        <a href="#">Privacy Policy</a>
+                        &middot;
+                        <a href="#">Terms &amp; Conditions</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+</div>
+
+<div th:replace="admin/fragmentAdmin :: footer"></div>
+</body>
+</html>

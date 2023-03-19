@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="customer/fragmentCustomer :: header"></head>
+<body  class="sb-nav-fixed">
+
+<div th:replace="customer/fragmentCustomer :: top-bar"></div>
+
+<!-- Navbar Start -->
+<div  class="container-fluid mb-5">
+  <div class="row border-top px-xl-5">
+    <div th:replace="customer/fragmentCustomer :: category"></div>
+    <div class="col-lg-9">
+      <nav th:replace="customer/fragmentCustomer :: nav-bar" ></nav>
+
+    </div>
+  </div>
+</div>
+<!-- Navbar End -->
+
+<!-- Page Header Start -->
+<div class="container-fluid bg-secondary mb-5">
+  <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 300px">
+    <h1 class="font-weight-semi-bold text-uppercase mb-3">Shop Detail</h1>
+    <div class="d-inline-flex">
+      <p class="m-0"><a href="">Home</a></p>
+      <p class="m-0 px-2">-</p>
+      <p class="m-0">Shop Detail</p>
+    </div>
+  </div>
+</div>
+<!-- Page Header End -->
+
+<!-- Shop Detail Start -->
+<div class="container-fluid py-5">
+  <div class="row px-xl-5">
+    <div class="col-lg-5 pb-5">
+      <div id="product-carousel" class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner border">
+          <div class="carousel-item active">
+            <img class="w-100 h-100" alt="" th:src="@{'/getImage/' + ${product.image}}"/>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-7 pb-5">
+      <h3 class="font-weight-semi-bold">[[${product.name}]]</h3>
+<!--      <h3 class="font-weight-semi-bold mb-4">$150.00</h3>-->
+      <h3>$[[${product.cost}]]</h3><h3 class="font-weight-semi-bold mb-4"><del>$[[${product.price}]]</del></h3>
+      <p class="mb-4">[[${product.title}]]</p>
+      <div class="d-flex align-items-center mb-4 pt-2">
+        <div class="input-group quantity mr-3" style="width: 130px;">
+          <div class="input-group-btn">
+            <button class="btn btn-primary btn-minus" >
+              <i class="fa fa-minus"></i>
+            </button>
+          </div>
+          <input type="text" class="form-control bg-secondary text-center" value="1">
+          <div class="input-group-btn">
+            <button class="btn btn-primary btn-plus">
+              <i class="fa fa-plus"></i>
+            </button>
+          </div>
+        </div>
+        <a th:href="@{/shop/cart/addToCart/{id}(id=${product.id})}" class="btn btn-primary px-3"><i class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
+      </div>
+      <div class="d-flex pt-2">
+        <p class="text-dark font-weight-medium mb-0 mr-2">Share on:</p>
+        <div class="d-inline-flex">
+          <a class="text-dark px-2" href="">
+            <i class="fab fa-facebook-f"></i>
+          </a>
+          <a class="text-dark px-2" href="">
+            <i class="fab fa-twitter"></i>
+          </a>
+          <a class="text-dark px-2" href="">
+            <i class="fab fa-linkedin-in"></i>
+          </a>
+          <a class="text-dark px-2" href="">
+            <i class="fab fa-pinterest"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row px-xl-5">
+    <div class="col">
+      <div class="nav nav-tabs justify-content-center border-secondary mb-4">
+        <a class="nav-item nav-link active" data-toggle="tab" href="#tab-pane-1">Description</a>
+      </div>
+      <div class="tab-content">
+        <div class="tab-pane fade show active" id="tab-pane-1">
+          <h4 class="mb-3">Product Description</h4>
+          <p>[[${product.description}]]</p>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Shop Detail End -->
+
+<!-- Products Start -->
+<div class="container-fluid py-5">
+  <div class="text-center mb-4">
+    <h2 class="section-title px-5"><span class="px-2">You May Also Like</span></h2>
+  </div>
+  <div class="row px-xl-5">
+    <div class="col">
+      <div class="owl-carousel related-carousel">
+
+        <div th:each="product : ${productRelative}"  class="card product-item border-0">
+          <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+            <img class="w-100" height="350px"  alt="" th:src="@{'/getImage/' + ${product.image}}"/>
+          </div>
+          <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+            <h6 class="text-truncate mb-3">[[${product.name}]]</h6>
+            <div class="d-flex justify-content-center">
+              <h6>$[[${product.cost}]]</h6><h6 class="text-muted ml-2"><del>$[[${product.price}]]</del></h6>
+            </div>
+          </div>
+          <div class="card-footer d-flex justify-content-between bg-light border">
+            <a th:href="@{/shop/product/{id}(id=${product.id})}" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>View Detail</a>
+            <a th:href="@{/shop/cart/addToCart/{id}(id=${product.id})}" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Products End -->
+
+<div  th:replace="customer/fragmentCustomer :: footer"></div>
+
+</body>
+</html>

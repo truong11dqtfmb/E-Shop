@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="admin/fragmentAdmin :: header"></head>
+<body class="sb-nav-fixed">
+
+<nav th:replace="admin/fragmentAdmin :: top-bar"></nav>
+
+<div id="layoutSidenav">
+
+    <div th:replace="admin/fragmentAdmin :: nav"></div>
+
+    <div id="layoutSidenav_content">
+        <main class="container" style="width = 100%">
+            <div class="container">
+                <div class="container mt-5 mb-3">
+                    <div th:if="${search}" class="container" >
+                        <p th:text="${'Bạn cần tìm?  ' + search}"></p>
+                    </div>
+                    <form class="form-inline" th:action="@{/admin/products/search}" method="GET">
+                        <input type="text" class="form-control" name="search">
+                        <button type="submit" class="btn btn-outline-success">Search</button>
+                    </form>
+                </div>
+                <div class="row justify-content-center">
+                    <table class="table table-hover">
+                        <thead class="thead-dark">
+                        <tr>
+                            <th scope="col"><a
+                                    th:href="@{'/admin/products/search/' + ${currentPage} + '?sortField=id&sortDir=' + ${reSortDir} + '&search=' + ${search}}">Index</a>
+                            </th>
+                            <th scope="col"><a
+                                    th:href="@{'/admin/products/search/' + ${currentPage} + '?sortField=name&sortDir=' + ${reSortDir} + '&search=' + ${search}}">Name</a>
+                            </th>
+                            <th scope="col"><a
+                                    th:href="@{'/admin/products/search/' + ${currentPage} + '?sortField=price&sortDir=' + ${reSortDir}+ '&search=' + ${search}}">Price</a>
+                            </th>
+                            <th scope="col">Category Name</th>
+                            <th scope="col"><a
+                                    th:href="@{'/admin/products/search/' + ${currentPage} + '?sortField=sale&sortDir=' + ${reSortDir}+ '&search=' + ${search}}">Sale</a>
+                            </th>
+                            <th scope="col"><a
+                                    th:href="@{'/admin/products/search/' + ${currentPage} + '?sortField=cost&sortDir=' + ${reSortDir}+ '&search=' + ${search}}">Cost</a>
+                            </th>
+                            <th scope="col"><a
+                                    th:href="@{'/admin/products/search/' + ${currentPage} + '?sortField=image&sortDir=' + ${reSortDir}+ '&search=' + ${search}}">Image</a>
+                            </th>
+                            <th scope="col">Edit</th>
+                            <th scope="col">Delete</th>
+                            <th scope="col">Enabled</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="product : ${products}">
+                            <td th:text="${product.id}"></td>
+                            <td th:text="${product.name}"></td>
+                            <td th:text="${product.price}"></td>
+                            <td th:text="${product.category.name}"></td>
+                            <td th:text="${product.sale}"></td>
+                            <td th:text="${product.cost}"></td>
+                            <!--                            <td><img src="" alt="" height="40px" width="40px" th:src="*{'data:image/jpeg;base64,' + {product.image}}"></td>-->
+                            <td><img alt="" th:src="@{'/getImage/' + ${product.image}}" height="40px" width="40px"/>
+                            </td>
+                            <td><a th:if="${product.isActived == true}"
+                                   th:href="@{/admin/product/editForm/{id}(id=${product.id})}" class="btn btn-warning">EDIT</a>
+                            </td>
+                            <td><a th:if="${product.isActived == true}"
+                                   th:href="@{/admin/product/delete/{id}(id=${product.id})}" class="btn btn-danger">DELETE</a>
+                            </td>
+                            <td><a th:if="${product.isActived == false}"
+                                   th:href="@{/admin/product/enabled/{id}(id=${product.id})}" class="btn btn-info">ENABLE</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="container">
+                        <ul class="pagination">
+                            <li th:if="${currentPage > 2}" class="page-item">
+                                <a class="page-link"
+                                   th:href="@{'/admin/products/search/1?sortField=id&sortDir='+${sortDir}+ '&search='+${search}}">
+                                    <strong>
+                                        |< </strong></a>
+                            </li>
+                            <li th:if="${currentPage > 1}" class="page-item">
+                                <a class="page-link"
+                                   th:href="@{'/admin/products/search/'+${currentPage-1} + '?sortField=id&sortDir='+${sortDir}+ '&search='+${search}}">
+                                    <strong> << </strong> </a>
+                            </li>
+                            <li th:each="i: ${#numbers.sequence(1,totalPages)}"
+                                th:classappend="${currentPage == i ? 'page-item active' : 'page-item'}">
+                                <!--                <a class="page-link" th:href="@{'/admin/products/search/'+${i} + '?sortField=id&sortDir='+${sortDir}}">[[${i}]]</a>-->
+                                <a th:if="${i > currentPage - 3 && i < currentPage + 3 }" class="page-link"
+                                   th:href="@{'/admin/products/search/'+${i} + '?sortField=id&sortDir='+${sortDir}+ '&search='+${search}}">[[${i}]]</a>
+                            </li>
+                            <li th:if="${(currentPage + 1) <= totalPages}" class="page-item">
+                                <a class="page-link"
+                                   th:href="@{'/admin/products/search/'+${currentPage+1} + '?sortField=id&sortDir='+${sortDir}+ '&search='+${search}}">
+                                    <strong> >> </strong></a>
+                            </li>
+                            <li th:if="${(currentPage + 2) <= totalPages}" class="page-item">
+                                <a class="page-link"
+                                   th:href="@{'/admin/products/search/' + ${totalPages} + '?sortField=id&sortDir='+${sortDir}+ '&search='+${search}}">
+                                    <strong> |> </strong> </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="py-4 bg-light mt-auto">
+            <div class="container-fluid px-4">
+                <div class="d-flex align-items-center justify-content-between small">
+                    <div class="text-muted">Copyright &copy; Your Website 2022</div>
+                    <div>
+                        <a href="#">Privacy Policy</a>
+                        &middot;
+                        <a href="#">Terms &amp; Conditions</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+</div>
+
+<div th:replace="admin/fragmentAdmin :: footer"></div>
+</body>
+</html>
