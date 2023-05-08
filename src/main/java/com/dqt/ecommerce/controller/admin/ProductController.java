@@ -87,6 +87,7 @@ public class ProductController {
         return "admin/products_search";
     }
 
+    //    Form new Product
     @GetMapping("/product/addForm")
     public String saveProduct(Model model) {
         model.addAttribute("productDTO", new ProductDTO());
@@ -94,6 +95,7 @@ public class ProductController {
         return "admin/product_add";
     }
 
+    //    Save Product
     @PostMapping("/product/save")
     public String createProduct(@Valid @ModelAttribute("productDTO") ProductDTO productDTO, BindingResult result, Model model) throws IOException {
         if (result.hasErrors()) {
@@ -106,6 +108,7 @@ public class ProductController {
         return "redirect:/admin/products";
     }
 
+//    Form edit Product
     @GetMapping("/product/editForm/{id}")
     public String editProduct(@PathVariable("id") Long id, Model model) {
         model.addAttribute("categories", categoryService.findAll());
@@ -114,6 +117,7 @@ public class ProductController {
         return "admin/product_edit";
     }
 
+//    Update Product
     @PostMapping("/product/update/{id}")
     public String updateProduct(@Valid @ModelAttribute("productDTO") ProductDTO productDTO, BindingResult result, @PathVariable("id") Long id, Model model) throws IOException {
         if (result.hasErrors()) {
@@ -123,12 +127,14 @@ public class ProductController {
         return "redirect:/admin/products";
     }
 
+//    Delete Product
     @GetMapping("/product/delete/{id}")
     public String deleteProduct(@PathVariable("id") Long id, Model model) {
         productService.deleteById(id);
         return "redirect:/admin/products";
     }
 
+//    Enable Product
     @GetMapping("/product/enabled/{id}")
     public String enabledProduct(@PathVariable("id") Long id, Model model) {
         productService.enabledById(id);
@@ -184,7 +190,7 @@ public class ProductController {
     }
 
     @PostMapping("/products/processingSaleAllProduct")
-    public String processingSaleAllProduct(@RequestParam("sale") int sale,Model model) {
+    public String processingSaleAllProduct(@RequestParam("sale") int sale, Model model) {
         productService.saleAllProduct(sale);
         return "redirect:/admin/products";
     }

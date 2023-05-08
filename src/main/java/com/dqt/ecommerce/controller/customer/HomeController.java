@@ -7,6 +7,8 @@ import com.dqt.ecommerce.service.CategoryService;
 import com.dqt.ecommerce.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -97,16 +99,25 @@ public class HomeController {
 
 
     @GetMapping("/category/{id}")
-    public String category(@PathVariable("id")Long id, Model model){
+    public String category(@PathVariable("id")Long id, @RequestParam(defaultValue = "0") int pageno, @RequestParam(defaultValue = "5") int pagesize, Model model){
         model.addAttribute("category",categoryService.findById(id).get());
-        model.addAttribute("products",productService.findAllByCategoryId(id));
+
+        Pageable page = PageRequest.of(pageno,pagesize);
+
+        model.addAttribute("products",productService.findAllByCategoryId(id,pageno,pagesize));
+
+
         return "customer/category";
     }
 
     @GetMapping("/product/{id}")
-    public String productDetail(@PathVariable("id")Long id, Model model){
+    public String productDetail(@PathVariable("id")Long id, Model model, @RequestParam(defaultValue = "0") int pageno, @RequestParam(defaultValue = "5") int pagesize){
         long categoryId = productService.findById(id).get().getCategory().getId();
-        model.addAttribute("productRelative", productService.findAllByCategoryId(categoryId));
+
+        Pageable page = PageRequest.of(pageno,pagesize);
+        model.addAttribute("productRelative", productService.findAllByCategoryId(categoryId,pageno,pagesize));
+
+
         model.addAttribute("product",productService.findById(id).get());
         return "customer/productDetail";
     }

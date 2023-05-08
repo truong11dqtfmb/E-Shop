@@ -38,7 +38,7 @@ public class ProductExportExcel {
         font.setFontHeight(16);
         style.setFont(font);
 
-        createCell(row, 0, "Product ID", style);
+        createCell(row, 0, "Stt", style);
         createCell(row, 1, "Name", style);
         createCell(row, 2, "Price", style);
         createCell(row, 3, "Title", style);

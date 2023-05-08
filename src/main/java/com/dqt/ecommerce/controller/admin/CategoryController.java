@@ -17,7 +17,7 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
-
+//  Find All Category is Active
     @GetMapping("/categories/actived")
     public String findAllCategoryActived(Model model) {
         model.addAttribute("categories", categoryService.findAllActived());
@@ -25,6 +25,7 @@ public class CategoryController {
         return "admin/categories";
     }
 
+//  Find All Category
     @GetMapping("/categories")
     public String findAllCategory(Model model) {
         model.addAttribute("categories", categoryService.findAll());
@@ -32,6 +33,7 @@ public class CategoryController {
         return "admin/categories";
     }
 
+//  Form new Category
     @GetMapping("/category/addForm")
     public String saveCategory(Model model) {
         model.addAttribute("category", new Category());
@@ -39,6 +41,7 @@ public class CategoryController {
         return "admin/category_add";
     }
 
+//  Save Category
     @PostMapping("/category/save")
     public String createCategory(@Valid @ModelAttribute("category") Category category, BindingResult result, Model model) {
         if (result.hasErrors()) {
@@ -48,6 +51,7 @@ public class CategoryController {
         return "redirect:/admin/categories";
     }
 
+//  Form edit Category
     @GetMapping("/category/editForm/{id}")
     public String editCategory(@PathVariable("id") Long id, Model model) {
         Optional<Category> category = categoryService.findById(id);
@@ -58,6 +62,7 @@ public class CategoryController {
         return "redirect:/admin/categories";
     }
 
+//  Update Category
     @PostMapping("/category/update/{id}")
     public String updateCategory(@Valid @ModelAttribute("category") Category category, BindingResult result, @PathVariable("id") Long id, Model model) {
         if (result.hasErrors()) {
@@ -67,25 +72,28 @@ public class CategoryController {
         return "redirect:/admin/categories";
     }
 
+//  Delete Category
     @GetMapping("/category/delete/{id}")
     public String deleteCategory(@PathVariable("id") Long id, Model model) {
         categoryService.deleteById(id);
         return "redirect:/admin/categories";
     }
 
+//  Enable Category
     @GetMapping("/category/enabled/{id}")
     public String enabledCategory(@PathVariable("id") Long id, Model model) {
         categoryService.enabledById(id);
         return "redirect:/admin/categories";
     }
 
-
+//  Delete All Category
     @GetMapping("/categories/deleteAll")
     public String deleteAll(Model model) {
         categoryService.deleteAllCategory();
         return "redirect:/admin/categories";
     }
 
+//  Enable All Category
     @GetMapping("/categories/enableAll")
     public String enableAll(Model model) {
         categoryService.enabledAllCategory();

@@ -29,7 +29,9 @@ public interface ProductRepository extends JpaRepository<Product,Long> {
 
     List<Product> findByIsActivedTrueAndIsDeletedFalse();
 
-    List<Product> findByCategoryId(long id);
+//    List<Product> findByCategoryId(long id,int pageno, int pagesize);
+
+    List<Product> findByCategoryId(long id, Pageable pageable);
 
     @Query(value = "SELECT * FROM product p WHERE p.is_actived = true and p.is_deleted = false ORDER BY id DESC LIMIT 8", nativeQuery = true)
     List<Product> findByTop8();

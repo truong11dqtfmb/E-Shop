@@ -7,7 +7,6 @@ import com.dqt.ecommerce.repository.CategoryRepository;
 import com.dqt.ecommerce.repository.ProductRepository;
 import com.dqt.ecommerce.service.ProductService;
 import com.dqt.ecommerce.util.FileUploadUtil;
-import com.lowagie.text.pdf.PdfName;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,7 +16,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -192,14 +190,24 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.findByIsActivedTrueAndIsDeletedFalse();
     }
 
+
+
+
+
     @Override
     public List<Product> findTop8() {
         return productRepository.findByTop8();
     }
 
+
+
     @Override
-    public List<Product> findAllByCategoryId(long id) {
-        return productRepository.findByCategoryId(id);
+    public List<Product> findAllByCategoryId(long id, int pageno, int pagesize) {
+
+        Pageable page = PageRequest.of(pageno,pagesize);
+
+
+        return productRepository.findByCategoryId(id,page);
     }
 
     @Override

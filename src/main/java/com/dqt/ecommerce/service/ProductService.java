@@ -4,6 +4,7 @@ import com.dqt.ecommerce.dto.ProductDTO;
 import com.dqt.ecommerce.model.Category;
 import com.dqt.ecommerce.model.Product;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.io.IOException;
 import java.util.List;
@@ -43,7 +44,8 @@ public interface ProductService {
 
     List<Product> findTop8();
 
-    List<Product> findAllByCategoryId(long id);
+
+    List<Product> findAllByCategoryId(long id, int pageno, int pagesize);
 
     Page<Product> pagefindAllActived(int pageNumber, String sortField, String sortDir);
 
