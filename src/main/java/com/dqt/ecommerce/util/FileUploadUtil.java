@@ -71,23 +71,23 @@ public class FileUploadUtil {
         return null;
     }
 
-    public static void saveFile(String fileName,
-                                MultipartFile multipartFile) throws IOException {
-        Path uploadPath = Paths.get("uploads/");
-        if (!Files.exists(uploadPath)) {
-            Files.createDirectories(uploadPath);
-        }
-        if (!multipartFile.isEmpty()) {
-            try {
-                InputStream inputStream = multipartFile.getInputStream();
-                Path filePath = uploadPath.resolve(fileName);
-                Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
-
-            } catch (IOException ioe) {
-                throw new IOException("Could not save image file: " + fileName, ioe);
-            }
-        }
-    }
+//    public static void saveFile(String fileName,
+//                                MultipartFile multipartFile) throws IOException {
+//        Path uploadPath = Paths.get("uploads/");
+//        if (!Files.exists(uploadPath)) {
+//            Files.createDirectories(uploadPath);
+//        }
+//        if (!multipartFile.isEmpty()) {
+//            try {
+//                InputStream inputStream = multipartFile.getInputStream();
+//                Path filePath = uploadPath.resolve(fileName);
+//                Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
+//
+//            } catch (IOException ioe) {
+//                throw new IOException("Could not save image file: " + fileName, ioe);
+//            }
+//        }
+//    }
 
 }
 
